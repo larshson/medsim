@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MedSim IP-800</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <div class="brand">
+        <span class="logo">✚</span>
+        <div>
+          <div class="dev-name" id="devName">MedSim IP-800</div>
+          <div class="dev-sub">Infusion pump · patient monitor</div>
+        </div>
+      </div>
+      <div id="statusBanner" class="status status-NORMAL">
+        <span id="statusText">NORMAL</span>
+        <span id="deathReason" class="death-reason"></span>
+      </div>
+      <div class="conn">
+        <span id="connDot" class="dot"></span>
+        <span id="connText">connecting…</span>
+      </div>
+    </header>
+
+    <main>
+      <section id="gauges" class="gauges"></section>
+
+      <section class="indicators" id="indicators">
+        <div class="ind" data-k="therapy"><span class="ind-lbl">Therapy</span><span class="ind-val" id="indTherapy">–</span></div>
+        <div class="ind" data-k="unlock"><span class="ind-lbl">Maintenance mode</span><span class="ind-val" id="indUnlock">–</span></div>
+        <div class="ind" data-k="alarm"><span class="ind-lbl">Alarms</span><span class="ind-val" id="indAlarm">–</span></div>
+        <div class="ind" data-k="occ"><span class="ind-lbl">Occlusion</span><span class="ind-val" id="indOcc">–</span></div>
+      </section>
+
+      <div class="lower">
+        <section class="panel scoreboard">
+          <h2>Scoreboard</h2>
+          <div class="tablewrap">
+            <table id="scoreTable">
+              <thead><tr><th>Player</th><th class="flags-head">Flags</th><th>#</th></tr></thead>
+              <tbody id="scoreBody"></tbody>
+            </table>
+            <div class="empty" id="scoreEmpty">No players connected yet.</div>
+          </div>
+        </section>
+
+        <section class="panel eventlog">
+          <h2>Event log</h2>
+          <ul id="eventList"></ul>
+        </section>
+      </div>
+    </main>
+
+    <footer id="controls">
+      <button id="btnReset" class="btn danger">⟳ Revive patient</button>
+      <label class="auto">
+        <input type="checkbox" id="autoReset"> Auto-reset after
+        <input type="number" id="autoResetSec" value="30" min="5" max="300"> s
+      </label>
+      <label class="auto">
+        <input type="checkbox" id="muteAudio"> Mute audio
+      </label>
+      <span class="spacer"></span>
+      <span class="hint">Attack surface: Insulin Delivery Service (0x183A) · Command Control Point (0x2B25)</span>
+    </footer>
+
+    <div id="debugPanel" class="debug hidden">
+      <strong>DEBUG</strong>
+      <button data-op="basal" data-val="1">basal 1</button>
+      <button data-op="basal" data-val="3">basal 3</button>
+      <button data-op="unlock" data-val="0">unlock</button>
+      <button data-op="maxlimit" data-val="20">limit 20</button>
+      <button data-op="basal" data-val="10">basal 10 ☠</button>
+      <button data-op="silence" data-val="1">silence alarms</button>
+      <button data-op="bolus" data-val="40">bolus 40 ☠</button>
+    </div>
+  </div>
+  <script src="/static/dashboard.js"></script>
+</body>
+</html>

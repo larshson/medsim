@@ -1,0 +1,26 @@
+# Adjust WorkingDirectory and the ExecStart path to wherever you cloned the
+# repo (e.g. /home/<user>/BLE-demo). Runs as root by default (no User=), which
+# the BlueZ org.bluez GATT/advertising registration needs. Verified on a
+# Raspberry Pi: the pump auto-starts on boot and advertises without any manual
+# step.
+#
+# Install:
+#   sudo cp systemd/medsim.service /etc/systemd/system/medsim.service
+#   sudo systemctl daemon-reload && sudo systemctl enable --now medsim
+[Unit]
+Description=MedSim IP-800 BLE infusion pump simulator
+After=bluetooth.service network.target
+Requires=bluetooth.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/BLE-demo
+Environment=PYTHONUNBUFFERED=1
+# Make sure the adapter is unblocked and up before we register GATT/advertising
+ExecStartPre=-/bin/sh -c 'rfkill unblock bluetooth; hciconfig hci0 up 2>/dev/null || true'
+ExecStart=/home/pi/BLE-demo/.venv/bin/python -m src.main --autoreset 30
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,6 @@
+# The pump (Raspberry Pi, requires BlueZ)
+aiohttp>=3.9
+dbus-fast>=2.21
+
+# Only for the self-test / reference client (optional, ideally on another machine)
+# bleak>=0.22
